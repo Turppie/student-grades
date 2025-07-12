@@ -1,0 +1,24 @@
+<div class ="register-student-form">
+    <input 
+        class="student-name-input"
+        type="text"
+        [(ngModel)]="studentName"
+        placeholder="Nombre del estudiante"
+    />
+    <input 
+        class="student-score-input"
+        type="number"
+        [(ngModel)]="studentScore"
+        placeholder="Nota del estudiante"
+    />
+    
+    <div
+       *ngIf="studentScore && (studentScore<0 || studentScore>20)"
+       class="student-score-error"
+       >
+       La nota estar entre 0 y 20
+     </div>
+    <button *ngIf="studentName && (studentScore>=0 && studentScore<=20)" class="register-student-btn" (click)="onRegisterStudent()">
+        Registrar
+    </button>
+</div>
