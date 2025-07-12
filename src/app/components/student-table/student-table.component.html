@@ -1,0 +1,28 @@
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Nota</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let student of students; let i = index">
+        <tr *ngIf="student &&student.name">
+            <td class="number">{{i+1}}</td>
+            <td>
+                <div class="student-name">{{student.name}}</div>
+            </td>
+            <td>
+                <div class="student-score">{{student.score}}</div>
+            </td>
+        </tr>
+        </ng-container>
+    </tbody>
+</table>
+
+<button 
+(click)="goToStudentForm()" 
+class="student-form-btn">
+Registrar alumnos
+</button>
