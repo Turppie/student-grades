@@ -16,6 +16,13 @@
             <td>
                 <div class="student-score">{{student.score}}</div>
             </td>
+            <td>
+                <button 
+                (click)="onDeleteStudent(student.id)"
+                 class="delete-student">
+                 Eliminar alumno
+                </button>
+            </td>
         </tr>
         </ng-container>
     </tbody>
@@ -23,6 +30,6 @@
 
 <button 
 (click)="goToStudentForm()" 
-class="student-form-btn">
-Registrar alumnos
+ class="student-form-btn">
+ Registrar alumnos
 </button>

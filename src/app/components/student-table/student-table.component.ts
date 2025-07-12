@@ -29,4 +29,8 @@ export class StudentTable {
     goToStudentForm(): void {
         this.router.navigate(['/register-student']);
     }
+
+    onDeleteStudent(id: number): void {
+        this.studentService.deleteStudentById(id);
+    }
 }
