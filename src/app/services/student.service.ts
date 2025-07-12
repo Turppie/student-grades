@@ -8,6 +8,13 @@ export class StudentService {
     private saveStudents(students: Student[]): void {
         localStorage.setItem(this.key, JSON.stringify(students));
     }
+
+    getNextId(): number {
+        const raw = localStorage.getItem('student_id_counter');
+        const nextId = raw? parseInt(raw,10) +1 : 1; // se parsea a decimal y se le suma 1, si no hay valor se pone 1 por defecto 
+        localStorage.setItem('student_id_counter',nextId.toString());
+        return nextId;
+    }
     
     getStudents(): Student[] {
         const raw = localStorage.getItem(this.key);
