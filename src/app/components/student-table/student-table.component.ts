@@ -3,6 +3,7 @@ import { Student } from "../../models/student.model";
 import { StudentService } from "../../services/student.service";
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
+import { Input,Output,EventEmitter } from "@angular/core";
 
 
 @Component({
@@ -14,17 +15,13 @@ import { Router } from "@angular/router";
 })
 
 export class StudentTable {
-    students: Student[] = [];
+    @Input() students: Student[] = [];
+    @Output() deleted = new EventEmitter<void>();
 
     constructor(
         private studentService: StudentService,
         private router: Router,
     ) {}
-
-    ngOnInit(): void {
-        this.students = this.studentService.getStudents();
-        console.log(this.students);
-    }
 
     goToStudentForm(): void {
         this.router.navigate(['/register-student']);
@@ -32,5 +29,6 @@ export class StudentTable {
 
     onDeleteStudent(id: number): void {
         this.studentService.deleteStudentById(id);
+        this.deleted.emit();
     }
 }

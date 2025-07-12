@@ -15,7 +15,6 @@ import { Router } from "@angular/router";
 })
 
 export class RegisterStudent {
-    studentId: number = 0;
     studentName = '';
     studentScore: number = 0;
     error = '';
@@ -32,6 +31,7 @@ export class RegisterStudent {
         }
         if (this.studentScore<0 || this.studentScore>20){
             this.error = 'La nota debe estar entre 0 y 20';
+            return;
         }
         this.error = '';
 
@@ -43,6 +43,8 @@ export class RegisterStudent {
         };
 
         this.studentService.registerStudent(request)
+        this.studentName = '';
+        this.studentScore = 0;
     }
 
     goHome(): void{

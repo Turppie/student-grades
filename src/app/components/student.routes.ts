@@ -7,6 +7,6 @@ export const STUDENT_ROUTES: Routes = [
     },
     {
         path: '',
-        loadComponent: () => import('./student-table/student-table.component').then((m)=>m.StudentTable)
+        loadComponent: () => import('./dashboard/dashboard.component').then((m)=>m.DashboardComponent)
     }
 ]
