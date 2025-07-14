@@ -12,6 +12,15 @@
         placeholder="Nota del estudiante"
     />
     
+    <select 
+        class="student-course-select"
+        [(ngModel)]="selectedCourse"
+    >
+        <option *ngFor="let course of courses" [value]="course">
+            {{ course }}
+        </option>
+    </select>
+    
     <div
        *ngIf="studentScore && (studentScore<0 || studentScore>20)"
        class="student-score-error"

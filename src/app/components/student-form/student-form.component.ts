@@ -1,5 +1,6 @@
-import { NgIf } from "@angular/common";
+import { NgIf, NgFor } from "@angular/common";
 import { Student } from "../../models/student.model";
+import { Course } from "../../models/course.enum";
 import { StudentService } from "../../services/student.service";
 import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
@@ -10,14 +11,16 @@ import { Router } from "@angular/router";
     standalone: true,
     templateUrl: './student-form.component.html',
     styleUrls: ['./student-form.component.css'],
-    imports: [FormsModule, NgIf]
+    imports: [FormsModule, NgIf, NgFor]
 
 })
 
 export class RegisterStudent {
     studentName = '';
     studentScore: number = 0;
+    selectedCourse: Course = Course.MATEMATICAS;
     error = '';
+    courses = Object.values(Course);
 
     constructor(
         private studentService: StudentService,
@@ -39,12 +42,14 @@ export class RegisterStudent {
         const request: Student = {
             id,
             name: this.studentName.trim(),
-            score: this.studentScore 
+            score: this.studentScore,
+            course: this.selectedCourse
         };
 
         this.studentService.registerStudent(request)
         this.studentName = '';
         this.studentScore = 0;
+        this.selectedCourse = Course.MATEMATICAS;
     }
 
     goHome(): void{

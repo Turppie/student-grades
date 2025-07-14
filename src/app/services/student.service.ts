@@ -1,9 +1,28 @@
 import { Injectable } from "@angular/core";
 import { Student } from "../models/student.model";
+import { Course } from "../models/course.enum";
 
 @Injectable({providedIn: 'root'})
 export class StudentService {
     private key = 'students';
+
+    constructor() {
+        this.initializeData();
+    }
+
+    private initializeData(): void {
+        if (!localStorage.getItem(this.key)) {
+            const initialStudents: Student[] = [
+                { id: 1, name: 'Ana García', score: 18, course: Course.MATEMATICAS },
+                { id: 2, name: 'Carlos López', score: 15, course: Course.FISICA },
+                { id: 3, name: 'María Rodríguez', score: 19, course: Course.QUIMICA },
+                { id: 4, name: 'Juan Pérez', score: 16, course: Course.MATEMATICAS },
+                { id: 5, name: 'Laura Martín', score: 17, course: Course.HISTORIA }
+            ];
+            this.saveStudents(initialStudents);
+            localStorage.setItem('student_id_counter', '5');
+        }
+    }
 
     private saveStudents(students: Student[]): void {
         localStorage.setItem(this.key, JSON.stringify(students));

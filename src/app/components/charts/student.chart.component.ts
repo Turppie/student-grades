@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import { Student } from "../../models/student.model";
+import { Course } from "../../models/course.enum";
 import { ApexAxisChartSeries, ApexChart, ApexXAxis, ApexTitleSubtitle, NgApexchartsModule } from "ng-apexcharts";
 
 export type ChartOptions = {
@@ -29,6 +30,9 @@ export type ChartOptions = {
 
 export class StudentChart implements OnChanges {
     @Input() students: Student[] = [];
+    @Input() selectedCourse: Course | null = null;
+    
+    filteredStudents: Student[] = [];
     chartOptions: ChartOptions = {
       series: [{ name: 'Notas', data: [] }],
       chart: { type: 'bar', height: 350 },
@@ -37,23 +41,34 @@ export class StudentChart implements OnChanges {
     };
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['students']) {
+    if (changes['students'] || changes['selectedCourse']) {
       this.updateChart();
     }
   }
 
   updateChart() {
+    // Filtrar estudiantes por curso si está seleccionado
+    if (this.selectedCourse) {
+      this.filteredStudents = this.students.filter(student => student.course === this.selectedCourse);
+    } else {
+      this.filteredStudents = [...this.students];
+    }
+
+    const title = this.selectedCourse 
+      ? `Notas de estudiantes - ${this.selectedCourse}`
+      : 'Notas de estudiantes - Todos los cursos';
+
     this.chartOptions = {
       ...this.chartOptions,
       series: [{
         name: 'Notas',
-        data: this.students.map(s => s.score)
+        data: this.filteredStudents.map(s => s.score)
       }],
       xaxis: {
-        categories: this.students.map(s => s.name)
+        categories: this.filteredStudents.map(s => s.name)
       },
       chart: this.chartOptions.chart,
-      title: this.chartOptions.title
+      title: { text: title }
     };
   }
 
